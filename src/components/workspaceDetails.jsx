@@ -1,17 +1,23 @@
 import { Box, Button } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { PageHeader, Stepper } from ".";
 import "./commonCss.css";
 import { useNavigate } from "react-router-dom";
 import edenLogo from "../assets/eden_logo.jpg";
+import { AppContext } from "../routing/Routing";
 
 const WorkspaceDetails = () => {
+  
+  const { setContextWorkspaceData } = useContext(AppContext);
   const navigate = useNavigate();
   const headers = {
     mainTitle: "Let's set up a home for all your work",
     subTitle: "You can always create another workspace later.",
   };
-  const [workspaceData, setWorkspaceData] = useState({workspaceName:'', workspaceUrl:''});
+  const [workspaceData, setWorkspaceData] = useState({
+    workspaceName: "",
+    workspaceUrl: "",
+  });
 
   // function to update the value entered by users in the textfields
   const changeValueHandler = (e) => {
@@ -54,11 +60,12 @@ const WorkspaceDetails = () => {
           p: 1.5,
           textTransform: "capitalize",
           fontFamily: "'Inter', sans-serif",
-          backgroundColor:"#674EE7"
+          backgroundColor: "#674EE7",
         }}
         variant="contained"
+        disabled={workspaceData.workspaceName === ""}
         onClick={() => {
-          console.log(workspaceData);
+          setContextWorkspaceData(workspaceData);
           navigate("/using-eden");
         }}
       >

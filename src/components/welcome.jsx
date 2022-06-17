@@ -1,18 +1,23 @@
 import { Box, Button } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { PageHeader, Stepper } from ".";
 import "./commonCss.css";
 import { useNavigate } from "react-router-dom";
 import edenLogo from "../assets/eden_logo.jpg";
+import { AppContext } from "../routing/Routing";
 
 const Welcome = () => {
+  const { setContextWelcomeData } = useContext(AppContext);
   const navigate = useNavigate();
   const headers = {
     mainTitle: "Welcome! First things first...",
     subTitle: "You can always change them later",
   };
 
-  const [welcomeData, setWelcomeData] = useState({fullName:'', userName:''});
+  const [welcomeData, setWelcomeData] = useState({
+    fullName: "",
+    userName: "",
+  });
 
   // function to update the value entered by users in the textfields
   const changeValueHandler = (e) => {
@@ -54,11 +59,12 @@ const Welcome = () => {
           p: 1.5,
           textTransform: "capitalize",
           fontFamily: "'Inter', sans-serif",
-          backgroundColor:"#674EE7"
+          backgroundColor: "#674EE7",
         }}
         variant="contained"
+        disabled={welcomeData.fullName === "" || welcomeData.userName === ""}
         onClick={() => {
-          console.log(welcomeData);
+          setContextWelcomeData(welcomeData);
           navigate("/workspace-details");
         }}
       >

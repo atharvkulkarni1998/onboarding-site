@@ -1,16 +1,37 @@
-import React from "react";
+import React, { useState, createContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import {Congratulations, UsingEden, Welcome, WorkspaceDetails} from '../components'
+import {
+  Congratulations,
+  UsingEden,
+  Welcome,
+  WorkspaceDetails,
+} from "../components";
+
+export const AppContext = createContext(null);
 const Routing = () => {
+  const [contextWelcomeData, setContextWelcomeData] = useState({});
+  const [contextWorkspaceData, setContextWorkspaceData] = useState({});
+  const [contextUsingEdenData, setContextUsingEdenData] = useState();
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Welcome />} />
-        <Route path="/workspace-details" element={<WorkspaceDetails />} />
-        <Route path="/using-eden" element={<UsingEden />} />
-        <Route path="/congratulations" element={<Congratulations />} />
-      </Routes>
-    </BrowserRouter>
+    <AppContext.Provider
+      value={{
+        contextWelcomeData,
+        setContextWelcomeData,
+        contextWorkspaceData,
+        setContextWorkspaceData,
+        contextUsingEdenData,
+        setContextUsingEdenData,
+      }}
+    >
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Welcome />} />
+          <Route path="/workspace-details" element={<WorkspaceDetails />} />
+          <Route path="/using-eden" element={<UsingEden />} />
+          <Route path="/congratulations" element={<Congratulations />} />
+        </Routes>
+      </BrowserRouter>
+    </AppContext.Provider>
   );
 };
 
